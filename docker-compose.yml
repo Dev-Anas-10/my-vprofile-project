@@ -3,7 +3,7 @@ version: '3.8'
 services:
   vprodb:
     build:
-      context: ./Dockerfile/db
+      context: ./Docker-files/db
       dockerfile: Dockerfile
     container_name: vprodb  # Set the container name for MySQL
     ports:
@@ -20,7 +20,7 @@ services:
 
   vproapp:
     build:
-      context: ./Dockerfile/app
+      context: ./Docker-files/app
       dockerfile: Dockerfile
     container_name: vproapp  # Set the container name for the app
     ports:
@@ -33,7 +33,7 @@ services:
 
   vproweb:
     build:
-      context: ./Dockerfile/web
+      context: ./Docker-files/web
       dockerfile: Dockerfile
     container_name: vproweb  # Set the container name for Nginx
     ports:
