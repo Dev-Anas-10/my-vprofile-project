@@ -1,5 +1,5 @@
 # Use the official Nginx image as the base
-FROM nginx:latest
+FROM nginx
 
 # Optional: Adding labels for metadata
 LABEL Name="Anas"
@@ -13,6 +13,3 @@ COPY nginvproapp.conf /etc/nginx/nginvproapp.conf
 
 # Expose the default Nginx port
 EXPOSE 80
-
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]

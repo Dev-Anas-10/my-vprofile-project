@@ -46,9 +46,8 @@ services:
       - "11211:11211"  # Expose Memcached port
 
   vpromq01:
-    image: rabbitmq:management  # Use the RabbitMQ image with management plugin
+    image: rabbitmq  # Use the RabbitMQ image with management plugin
     ports:
-      - "5672:5672"  # RabbitMQ messaging port
       - "15672:15672"  # RabbitMQ management UI port
     environment:
       RABBITMQ_DEFAULT_USER: guest  # Set RabbitMQ default username
