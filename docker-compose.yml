@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  vprodb:
+    build:
+      context: ./Dockerfile/db
+      dockerfile: Dockerfile
+    container_name: vprodb  # Set the container name for MySQL
+    ports:
+      - "3306:3306"  # Expose MySQL port
+    environment:
+      MYSQL_ROOT_PASSWORD: vprodbpass
+      MYSQL_DATABASE: accounts
+      # Uncomment these if you need to create a user
+      # MYSQL_USER: admin
+      # MYSQL_PASSWORD: admin123
+    volumes:
+      - db_data:/var/lib/mysql  # Persistent volume for MySQL data
+    image: kubeanas/projectdb  # Specify the image name for the db service
+
+  vproapp:
+    build:
+      context: ./Dockerfile/app
+      dockerfile: Dockerfile
+    container_name: vproapp  # Set the container name for the app
+    ports:
+      - "8080:8080"  # Expose Tomcat port
+    depends_on:
+      - vprodb  # Ensure db is started before app
+    environment:
+      - DATABASE_URL=mysql://admin:admin123@vprodb:3306/accounts  # Example of a database URL
+    image: kubeanas/projectapp  # Specify the image name for the app service
+
+  vproweb:
+    build:
+      context: ./Dockerfile/web
+      dockerfile: Dockerfile
+    container_name: vproweb  # Set the container name for Nginx
+    ports:
+      - "80:80"  # Expose Nginx port
+    depends_on:
+      - vproapp  # Ensure app is started before web
+    image: kubeanas/projectweb  # Specify the image name for the web service
+
+  vprocache01:
+    image: memcached  # Use the official Memcached image
+    ports:
+      - "11211:11211"  # Expose Memcached port
+
+  vpromq01:
+    image: rabbitmq:management  # Use the RabbitMQ image with management plugin
+    ports:
+      - "5672:5672"  # RabbitMQ messaging port
+      - "15672:15672"  # RabbitMQ management UI port
+    environment:
+      RABBITMQ_DEFAULT_USER: guest  # Set RabbitMQ default username
+      RABBITMQ_DEFAULT_PASS: guest  # Set RabbitMQ default password
+
+volumes:
+  db_data: {} # Named volume for MySQL data storage
