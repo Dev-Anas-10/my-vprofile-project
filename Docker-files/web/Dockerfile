@@ -6,10 +6,10 @@ LABEL Name="Anas"
 LABEL project="vprofile"
 
 # Remove the default Nginx configuration file
-RUN rm /etc/nginx/conf.d/default.conf
+RUN rm -rf /etc/nginx/conf.d/default.conf
 
 # Copy the custom Nginx configuration file to the container
-COPY nginvproapp.conf /etc/nginx/nginvproapp.conf
+COPY nginvproapp.conf /etc/nginx/conf.d/nginvproapp.conf
 
 # Expose the default Nginx port
 EXPOSE 80
