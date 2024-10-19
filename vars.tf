@@ -4,7 +4,7 @@ variable "region" {
   default = "us-east-1"
 }
 
-variable "cluster name" {
+variable "cluster_name" {
   description = "eks cluster name"
   type = string
   default = "anas-eks"
