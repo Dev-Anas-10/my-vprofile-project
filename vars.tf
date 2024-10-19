@@ -1,11 +1,11 @@
 variable "region" {
   description = "aws region"
-  type = string
-  default = "us-east-1"
+  type        = string
+  default     = "us-east-1"
 }
 
 variable "cluster_name" {
   description = "eks cluster name"
-  type = string
-  default = "anas-eks"
+  type        = string
+  default     = "anas-eks"
 }
